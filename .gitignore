@@ -1,4 +1,6 @@
-# Python Files
+*.ipynb_checkpoints
+
+#Python Files
 *.pyc
 
 # Mac File System
