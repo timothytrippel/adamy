@@ -8,7 +8,7 @@ __all__=['get_data']
 def get_data():
     '''
     Output:
-    returns a list of 3 data-sets scaled to have unit norm
+    returns a list of 3 data-sets scaled to have zero mean and unit variance
     '''
 
     # read excel files as data-frames:
