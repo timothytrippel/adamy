@@ -6,4 +6,8 @@
 # Mac File System
 *.DS_Store 
 
-
+# Images
+*.png
+*.PNG
+*.jpg
+*.JPG
