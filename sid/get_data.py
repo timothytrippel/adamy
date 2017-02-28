@@ -53,7 +53,7 @@ def get_data(dataName):
     dataset = scale(data)
 
     # prediction vector (EV/EBITDA):
-    y = np.divide( dataset[0], dataset[2] )
+    y = np.divide( dataset[:, 0], dataset[:, 2] )
 
     # training matrix:
     X = np.delete( dataset, [0, 2], 1 )
