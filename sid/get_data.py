@@ -4,27 +4,37 @@ from sklearn.preprocessing import scale
 
 __all__=['get_data']
 
-def get_data():
+def get_data(dataName):
     '''
     Output:
     returns a list of 3 data-sets scaled to have zero mean and unit variance
     '''
 
     # read excel files as data-frames:
-    consumerDiscrete = pd.read_excel('../data/U of M Student Data - Consumer Discretionary .xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
-    consumerStaples  = pd.read_excel('../data/U of M Student Data - Consumer Staples.xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
-    industrials      = pd.read_excel('../data/U of M Student Data - Industrials.xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
-
-    # remove string data columns
-    consumerDiscrete = consumerDiscrete.iloc[:, 5::]
-    consumerStaples  = consumerStaples.iloc[:, 5::]
-    industrials      = industrials.iloc[:, 5::]
+    if dataName == consumerDiscretionary or dataName == allTheData :
+        consumerDiscrete = pd.read_excel('../data/U of M Student Data - Consumer Discretionary .xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        consumerDiscrete = consumerDiscrete.iloc[:, 5::]
+    elif dataName == consumerStaples or dataName == allTheData:
+        consumerStaples  = pd.read_excel('../data/U of M Student Data - Consumer Staples.xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        consumerStaples  = consumerStaples.iloc[:, 5::]
+    elif dataName == industrials or dataName == allTheData:
+        industrials      = pd.read_excel('../data/U of M Student Data - Industrials.xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        industrials      = industrials.iloc[:, 5::]
+    else:
+        raise ValueError('incorrect function input to get_data() ...')
 
     # list of all the data sets:
-    dataSet = [consumerDiscrete, consumerStaples, industrials]
+    if dataName == consumerDiscretionary:
+        dataSet = [consumerDiscrete]
+    elif dataName == consumerStaples:
+        dataSet = [consumerStaples]
+    elif dataName == industrials:
+        dataSet = [industrials]
+    elif dataName == allTheData :
+        dataSet = [consumerDiscrete, consumerStaples, industrials]
 
     for i in range( len(dataSet) ):
         # calculate column means:
