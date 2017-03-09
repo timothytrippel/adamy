@@ -4,46 +4,59 @@ from sklearn.preprocessing import scale
 
 __all__=['get_data']
 
-def get_data():
+def get_data(dataName):
     '''
+    Input:
+    name of the dataset you want to import
+
     Output:
-    returns a list of 3 data-sets scaled to have zero mean and unit variance
+    returns a training matrix 'X' and the prediction vector 'y'
+    where, y: EV/EBITDA
+           X: rest of the matrix
+
+    Usage:
+    X, y = get_data('consumerDiscretionary')
     '''
 
     # read excel files as data-frames:
-    consumerDiscrete = pd.read_excel('../data/U of M Student Data - Consumer Discretionary .xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
-    consumerStaples  = pd.read_excel('../data/U of M Student Data - Consumer Staples.xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
-    industrials      = pd.read_excel('../data/U of M Student Data - Industrials.xlsx',\
-                                     'Screening', skiprows=7, na_values=['-', 'NM'] )
+    if dataName == 'consumerDiscretionary':
+        consumerDiscrete = pd.read_excel('../data/U of M Student Data - Consumer Discretionary .xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        dataset = consumerDiscrete.iloc[:, 5::]
+    elif dataName == 'consumerStaples':
+        consumerStaples  = pd.read_excel('../data/U of M Student Data - Consumer Staples.xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        dataset = consumerStaples.iloc[:, 5::]
+    elif dataName == 'industrials':
+        industrials = pd.read_excel('../data/U of M Student Data - Industrials.xlsx',\
+                                         'Screening', skiprows=7, na_values=['-', 'NM'] )
+        dataset = industrials.iloc[:, 5::]
+    else:
+        raise ValueError('incorrect function input to get_data() ...')
 
-    # remove string data columns
-    consumerDiscrete = consumerDiscrete.iloc[:, 5::]
-    consumerStaples  = consumerStaples.iloc[:, 5::]
-    industrials      = industrials.iloc[:, 5::]
+    # calculate column means:
+    colMean = np.nanmean(dataset, axis=0)
+    
+    # find indices where you need to replace:
+    inds = np.where( np.isnan( dataset ) )
 
-    # list of all the data sets:
-    dataSet = [consumerDiscrete, consumerStaples, industrials]
+    # convert data-frame to numpy array:
+    data = pd.DataFrame.as_matrix( dataset )
 
-    for i in range( len(dataSet) ):
-        # calculate column means:
-        colMean = np.nanmean(dataSet[i], axis=0)
+    # replace NA values with col means:
+    data[inds] = np.take(colMean, inds[1])
 
-        # find indices where you need to replace:
-        inds = np.where( np.isnan( dataSet[i] ) )
+    # clear variable value:
+    dataset = None
 
-        # convert data-frame to numpy array:
-        data = pd.DataFrame.as_matrix( dataSet[i] )
+    # replace variable with new value:
+    dataset = scale(data)
 
-        # replace NA values with col means:
-        data[inds] = np.take(colMean, inds[1])
+    # prediction vector (EV/EBITDA):
+    y = np.divide( dataset[:, 0], dataset[:, 2] )
 
-        # clear variable value:
-        dataSet[i] = None
+    # training matrix:
+    X = np.delete( dataset, [0, 2], 1 )
 
-        # replace variable with new value:
-        dataSet[i] = scale(data)
-
-    return dataSet
+    return X, y
         
