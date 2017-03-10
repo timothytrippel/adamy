@@ -1,5 +1,5 @@
 from get_data import *
 
-dataSet = get_data()
+X, y = get_data('industrials')
 
-print('data set 1 size:', dataSet[0].shape)
+print('data set 1 size:', X.shape)
