@@ -1,0 +1,25 @@
+def rename_cols(df):
+    df.rename(columns={'Industry Classifications':'industry',
+                            'Geographic Locations':'loc',
+                            'Total Enterprise Value [My Setting] [12/31/2016] ($USDmm, Historical rate)':'t_ev',
+                            'Total Revenue [LTM] ($USDmm, Historical rate)':'t_rev',
+                            'EBITDA [LTM] ($USDmm, Historical rate)':'ebitda',
+                            'EBITDA Margin % [LTM]':'ebitda_margin',
+                            'TEV/LTM Total Revenues [My Setting] [LTM as of 12/31/2016] (x)':'t_ev/ltm',
+                            'TEV/LTM EBITDA [My Setting] [LTM as of 12/31/2016] (x)':'t_ev/ltm_ebitda',
+                            'Est. Annual Revenue Growth - 1 Yr % - Capital IQ [Latest] (%)':'est_1yr_rev_gr',
+                            'Est. Annual EBITDA Growth - 1 Yr % - Capital IQ [Latest] (%)':'est_1yr_ebitda_gr',
+                            'Total Revenues, 1 Yr Growth % [LTM] (%)':'t_rev_1yr_growth',
+                            'EBITDA, 1 Yr Growth % [LTM] (%)':'ebitda_1yr_gr',
+                            'Total Revenues, 3 Yr CAGR % [LTM] (%)':'t_rev_3_yr_cagr',
+                            'EBITDA, 3 Yr CAGR % [LTM] (%)':'ebitda_3yr_cagr',
+                            'Total Revenues, 5 Yr CAGR % [LTM] (%)':'t_rev_5yr_cagr',
+                            'EBITDA, 5 Yr CAGR % [LTM] (%)':'ebitda_5yr_cagr',
+                            'Return on Assets % [LTM]':'return_on_assets',
+                            'Return on Equity % [LTM]':'return_on_equity',
+                            'Capex as % of Revenues [Latest Annual] (%)':'capex/rev',
+                            'EBITDA / Interest Exp. [LTM]':'ebitda/interest_exp',
+                            'Total Debt/Capital % [Latest Annual]':'t_debt/cap',
+                            'Total Debt/Equity % [Latest Annual]':'t_debt/equity'   
+                           },inplace=True)
+    return df

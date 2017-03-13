@@ -1,0 +1,10 @@
+1. to sync repo with GitHub server --> "git pull"
+2. to add file to stage for committing --> "git add <file name>"
+3. to commit files on stage to local copy of repo --> "git commit -m "some commit message" "
+4. to sync local commits to repo on GitHub server --> "git push"
+
+###
+Resist the urge to create git branches and forks as it will only make things messier for the time being.
+If the project gets large enough to warrant the use of these advanced git features we will have a 
+tutorial at such time. :)
+###
